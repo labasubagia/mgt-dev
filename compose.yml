@@ -1,0 +1,38 @@
+services:
+  mgt-dev:
+    container_name: mgt-dev
+    image: mgtcommerce/mgt-dev:v3
+    hostname: mgt-dev
+    # Note: 'privileged: true' in rootless provides max permissions available to the user
+    privileged: true
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+
+    ports:
+      - "80:80"
+      - "443:443"
+      - "22:22"
+      - "8443:8443"
+      - "3306:3306"
+      - "9200:9200"
+      - "15672:15672"
+
+    volumes:
+      # Mapping to your home directory so you have write permissions
+      - mgt_data:/var/lib/mysql:Z
+      - ~/.mgt/cloudpanel:/home/cloudpanel:Z
+      - ./composer_auth.json:/root/.config/composer/auth.json:Z
+
+    # Required for Podman to handle internal systemd properly
+    cap_add:
+      - SYS_ADMIN
+
+    deploy:
+      resources:
+        limits:
+          cpus: '2.00'
+          memory: 6G
+
+volumes:
+  mgt_data:
