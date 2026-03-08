@@ -23,6 +23,8 @@ services:
       - mgt_data:/var/lib/mysql:Z
       - ~/.mgt/cloudpanel:/home/cloudpanel:Z
       - ./composer_auth.json:/root/.config/composer/auth.json:Z
+      - ./composer_auth.json:/home/cloudpanel/.config/composer/auth.json:Z
+      - ./supervisord.conf:/etc/supervisor/conf.d/supervisord.conf:Z
 
     # Required for Podman to handle internal systemd properly
     cap_add:
