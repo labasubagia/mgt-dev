@@ -28,11 +28,14 @@ services:
     cap_add:
       - SYS_ADMIN
 
+    # Resource constraints refer to 
+    # https://www.mgt.io/docs/mgt-development-environment/installation
     deploy:
       resources:
         limits:
-          cpus: '2.00'
-          memory: 6G
+          cpus: '4.00'
+          memory: 4G
+          memory_swap: 2G
 
 volumes:
   mgt_data:
